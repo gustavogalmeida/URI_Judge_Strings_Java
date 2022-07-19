@@ -23,56 +23,63 @@ tratar. As N linhas contém cada uma delas M (1 ≤ M ≤ 1*10^3) caracteres.
 Saída
 Para cada entrada, deve-se apresentar a mensagem criptografada.
  */
-import java.io.PrintStream;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         // quantidade de linhas n
-        // int n = scanner.nextInt();
-        // scanner.nextLine();
+        int n = scanner.nextInt();
+        scanner.nextLine();
 
         // lê e criptografa N vezes
-        // for (int i = 0; i<n;i++)
-        String entrada = scanner.nextLine();
-        String[] criptografado1 = new String[entrada.length()];
+        for (int h = 0; h<n;h++){
 
-        // criptografar 1 (apenas letras maisculas e minusculas)
-        for (int i = 0; i<entrada.length(); i++){
-            char caracterNormal = entrada.charAt(i);
-            int ASCI = caracterNormal; // char passar para (int) ASCII
-            if (ASCI >= 65 && ASCI <=90 || ASCI >= 97 && ASCI <= 122){
-                ASCI = ASCI+3;
-                char caracterCriptografado = (char) ASCI; // int ASCI para char
-                criptografado1[i] = String.valueOf(caracterCriptografado);
-            } else {
-                criptografado1[i] = String.valueOf(caracterNormal);
+            String entrada = scanner.nextLine();
+            String[] criptografado1 = new String[entrada.length()];
+
+            // criptografar #1 (apenas letras maisculas e minusculas)
+            for (int i = 0; i<entrada.length(); i++){
+                char caracterNormal = entrada.charAt(i);
+                int ASCI = caracterNormal; // char passar para (int) ASCII
+                if (ASCI >= 65 && ASCI <=90 || ASCI >= 97 && ASCI <= 122){
+                    ASCI = ASCI+3;
+                    char caracterCriptografado = (char) ASCI; // int ASCI para char
+                    criptografado1[i] = String.valueOf(caracterCriptografado);
+                } else {
+                    criptografado1[i] = String.valueOf(caracterNormal);
+                }
             }
-        }
 
-        // criptografar 2 invertendo linha
-        String[] criptografado2 = new String[criptografado1.length];
-        int j=0;
-        for (int i = criptografado1.length-1; i >= 0; i--) {
-            criptografado2[i] = criptografado1[j];
-            j++;
-        }
+            // criptografar #2 invertendo linha
+            String[] criptografado2 = new String[criptografado1.length];
+            int j=0;
+            for (int i = criptografado1.length-1; i >= 0; i--) {
+                criptografado2[i] = criptografado1[j];
+                j++;
+            }
 
-        // criptografar 3 uma para esquerda na tabela ASCI da metade da string pra frente
-        for(int i = criptografado2.length/2+1; i <= criptografado2.length; i++ ){
-            String cStr = criptografado2[i];
-            char cChar = cStr.charAt(1);
-            int ASCI = cChar;
-            ASCI--;
-            cChar = (char)cChar;
-            // parei aqui criptografado2[i] = ;
-        }
+            // criptografar #3 uma para esquerda na tabela ASCI da metade da string pra frente
+            for(int i = criptografado2.length/2; i < criptografado2.length; i++ ){
+                String cStr = criptografado2[i];
+                char cChar = cStr.charAt(0);
+                int ASCI = cChar;
+                ASCI--;
+                char carcaterCriptografado = (char) ASCI;
+                criptografado2[i] = String.valueOf(carcaterCriptografado);
+            }
 
-        // imprimir
-        for (int i = 0; i < criptografado2.length;i++){
-            System.out.print(criptografado2[i]);
+            String criptografado="";
+            // passar de Array para string
+            for (int i = 0; i < criptografado2.length;i++){
+                criptografado = criptografado+criptografado2[i];
+            }
+
+            System.out.println(criptografado);
+
         }
     }
 }
